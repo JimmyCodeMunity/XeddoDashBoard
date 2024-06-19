@@ -2,9 +2,10 @@ import React from 'react';
 import { Icon } from './Icon';
 import { IconButton } from './IconButton';
 
-const NavBar = ({ onSidebarHide }) => {
-    console.log("navbar sidestate", onSidebarHide);
+const NavBar = ({ onSidebarHide ,displaySidebar,showSidebar}) => {
     const username = localStorage.getItem('user');
+    console.log("navbar state",!showSidebar)
+    
     return (
         <div className="w-full sm:flex p-2 items-end">
             <div className="sm:flex-grow flex justify-between">
@@ -24,7 +25,7 @@ const NavBar = ({ onSidebarHide }) => {
                 <IconButton
                     icon="res-react-dash-sidebar-open"
                     className="block sm:hidden"
-                    onClick={onSidebarHide}
+                    onClick={displaySidebar}
                 />
             </div>
             <div className="w-full sm:w-56 mt-4 sm:mt-0 relative">

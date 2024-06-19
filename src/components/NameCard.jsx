@@ -1,7 +1,6 @@
 import { useSpring, animated } from "react-spring";
 import { Image } from "./Image";
 import { Icon } from "./Icon";
-import clsx from 'clsx';
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -22,11 +21,23 @@ export const NameCard = ({
 
   const [product, setProduct] = useState(0)
   const [user, setUser] = useState(0)
+  const [vehicles,setVehicles] = useState(0)
 
   const getTotalProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/v2/product/allproducts');
+      const response = await axios.get('https://travelinkserver.vercel.app/api/v1/admin/alltrips');
       setProduct(response.data.length);
+      // console.log("productcount", response.data.length);
+
+    } catch (error) {
+      console.log(error)
+
+    }
+  }
+  const getTotalVehicles = async () => {
+    try {
+      const response = await axios.get('https://travelinkserver.vercel.app/api/v1/admin/getvehicles');
+      setVehicles(response.data.length);
       // console.log("productcount", response.data.length);
 
     } catch (error) {
@@ -36,7 +47,7 @@ export const NameCard = ({
   }
   const getTotalStaff = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/v2/user/allusers');
+      const response = await axios.get('https://travelinkserver.vercel.app/api/v1/admin/allusers');
       setUser(response.data.length);
       // console.log("staffcount", response.data.length);
 
@@ -49,6 +60,7 @@ export const NameCard = ({
   useEffect(() => {
     getTotalProducts();
     getTotalStaff();
+    getTotalVehicles();
   }, [])
   return (
     <div className="flex-grow overflow-x-hidden overflow-auto flex flex-wrap content-start p-2">
@@ -59,7 +71,8 @@ export const NameCard = ({
               <Image path={`mock_faces_${imgId}`} className="w-10 h-10" />
               <div className="ml-2">
                 <div className="flex items-center">
-                  <div className="mr-2 font-bold text-white">Tasks {token}</div>
+                  <div className="mr-2 font-bold text-white">Total Vehicles
+                  </div>
                   <Icon path="res-react-dash-tick" />
                 </div>
                 <div className="text-sm ">500</div>
@@ -97,13 +110,13 @@ export const NameCard = ({
           </div>
           <div className="flex flex-col items-center">
             <Icon
-              path={rise ? 'res-react-dash-bull' : 'res-react-dash-bear'}
+              path={rise ? 'res-react-dash-bear' : 'res-react-dash-bear'}
               className="w-8 h-8"
             />
             <animated.div
             className="text-green-500 text-lg font-bold"
             >
-              {transactions.interpolate((i) => `$${i.toFixed(2)}`)}
+              {transactions.interpolate((i) => `${vehicles}`)}
             </animated.div>
             <div className="text-sm ">Last 6 month</div>
           </div>

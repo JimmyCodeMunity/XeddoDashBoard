@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Image } from './Image';
 import { Icon } from './Icon';
 import { MenuItem } from './MenuItem';
 import { config, useSpring,animated } from 'react-spring';
@@ -7,9 +6,9 @@ import clsx from 'clsx';
 import { IconButton } from './IconButton';
 import { sidebarItems } from '../constants';
 
-const SideBar = ({ onSidebarHide, showSidebar }) => {
+const SideBar = ({ onSidebarHide, showSidebar,displaySidebar }) => {
     const username = localStorage.getItem('user');
-    // console.log("sidebar state",showSidebar)
+    console.log("sidebar state",showSidebar)
     const [selected, setSelected] = useState('0');
     const { dashOffset, indicatorWidth, precentage } = useSpring({
         dashOffset: 26.015,
@@ -18,6 +17,10 @@ const SideBar = ({ onSidebarHide, showSidebar }) => {
         from: { dashOffset: 113.113, indicatorWidth: 0, precentage: 0 },
         config: config.molasses,
     });
+
+    const displayMessage = () =>{
+        alert('menu icon clicked')
+    }
     return (
         <div
             className={clsx(
@@ -28,7 +31,7 @@ const SideBar = ({ onSidebarHide, showSidebar }) => {
             <div className="flex-shrink-0 overflow-hidden p-2">
                 <div className="flex items-center h-full sm:justify-center xl:justify-start p-2 sidebar-separator-top">
                     <div className="block sm:hidden xl:block ml-2 font-bold text-xl text-white">
-                        ViatuCare
+                        Xeddo
                     </div>
                     <div className="flex-grow sm:hidden xl:block" />
                     <IconButton
