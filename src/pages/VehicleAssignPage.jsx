@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 import SideBar from '../components/SideBar';
-import UserAdd from '../components/UserAdd';
+import VehicleAssign from '../components/VehicleAssign';
 
-const AddUser = () => {
+const VehicleAssignPage = () => {
     
 
     
@@ -20,7 +20,7 @@ const AddUser = () => {
                     }}
                     showSidebar={showSidebar}
                 />
-                <UserAdd
+                <VehicleAssign
                     onSidebarHide={() => {
                         onSetShowSidebar(false);
                     }}
@@ -31,4 +31,4 @@ const AddUser = () => {
     
 }
 
-export default AddUser;
+export default VehicleAssignPage;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Icon } from "../Icon";
+import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -9,7 +9,7 @@ const CreateDestination = () => {
   const [destinations, setDestinations] = useState([]);
 
   const [loading, setLoading] = useState(false);
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
   const addDestination = async (e) => {
     setLoading(true);
@@ -61,14 +61,37 @@ const CreateDestination = () => {
       const data = response.data;
       if (data.length > 0) {
         setDestinations(data);
-        console.log(data);
+        // console.log(data);
       } else {
-        console.log("No destinations found");
+        // console.log("No destinations found");
         toast.error("No destinations found");
       }
     } catch (error) {
-      console.log("Erro fetching destinations");
+      console.log("Error fetching destinations");
       toast.error("Error fetching destinations");
+    }
+  };
+
+  const deleteDestination = async (id) => {
+    const result = await Swal.fire({
+      title: "Do you really want to delete?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(
+          `https://travelinkserver.vercel.app/api/v1/admin/deletedestination/${id}`
+        );
+        toast.success("Destination deleted");
+        getDestinations();
+        navigate("/destinations");
+        
+      } catch (error) {
+        toast.error(error.message);
+      }
     }
   };
 
@@ -163,9 +186,9 @@ const CreateDestination = () => {
                         {dest.location}
                       </td>
                       <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white flex-row space-x-2">
-                        <Link to="" className="bg-red-500 p-1 rounded-md">
+                        <button onClick={()=>deleteDestination(dest._id)} to="" className="bg-red-500 p-1 rounded-md">
                           Delete
-                        </Link>
+                        </button>
                         <Link to={`/editdestination/${dest._id}`} className="bg-green-500 p-1 rounded-md">
                           Edit
                         </Link>

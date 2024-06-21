@@ -4,6 +4,10 @@ import SideBar from '../components/SideBar';
 
 const AddStaff = () => {
     const [showSidebar, onSetShowSidebar] = useState(false);
+    const toggleSidebar = () => {
+        onSetShowSidebar(!showSidebar); // Toggle the current state
+        
+    };
     return (
         <div className="flex">
             <SideBar
@@ -16,6 +20,7 @@ const AddStaff = () => {
                 onSidebarHide={() => {
                     onSetShowSidebar(false);
                 }}
+                displaySidebar={toggleSidebar}
             />
         </div>
     );

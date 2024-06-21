@@ -2,11 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loader from "../Loader";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ViewTrips = () => {
   const [tripdata, setTripdata] = useState([]);
   const [loading,setLoading] = useState(false);
+  const navigate = useNavigate()
 
   const getTrips = async () => {
     setLoading(true)
@@ -23,6 +25,30 @@ const ViewTrips = () => {
       console.log(error);
       toast.error("error getting products");
       setLoading(false);
+    }
+  };
+
+
+  //delete trip
+  const deleteTrip = async (id) => {
+    const result = await Swal.fire({
+      title: "Do you really want to delete?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(
+          `https://travelinkserver.vercel.app/api/v1/admin/deletetrip/${id}`
+        );
+        toast.error("Product deleted");
+        getTrips();
+        navigate("/trips");
+      } catch (error) {
+        toast.error(error.message);
+      }
     }
   };
 
@@ -100,11 +126,18 @@ const ViewTrips = () => {
                           <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium flex-row items-center space-x-3">
                             <button
                               type="button"
+                              class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg bg-yellow-500 p-2 border border-transparent text-white disabled:opacity-50 disabled:pointer-events-none"
+                            >
+                              <Link to={`/edittrip/${trip._id}`}>Mark Complete</Link>
+                            </button>
+                            <button
+                              type="button"
                               class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg bg-green-500 p-2 border border-transparent text-white disabled:opacity-50 disabled:pointer-events-none"
                             >
                               <Link to={`/edittrip/${trip._id}`}>Edit</Link>
                             </button>
                             <button
+                            onClick={()=>deleteTrip(trip._id)}
                               type="button"
                               class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg bg-red-500 p-2 border border-transparent text-white disabled:opacity-50 disabled:pointer-events-none"
                             >

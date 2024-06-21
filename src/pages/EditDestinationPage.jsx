@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import clsx from 'clsx';
-import Content from '../components/Content';
+
 import SideBar from '../components/SideBar';
-import ProductAdd from '../components/ProductAdd';
-import UserAdd from '../components/UserAdd';
-import UserEdit from '../components/UserEdit';
+
 import DestinationEdit from '../components/DestinationEdit';
 
 const EditDestinationPage = () => {
@@ -12,6 +9,10 @@ const EditDestinationPage = () => {
 
     
         const [showSidebar, onSetShowSidebar] = useState(false);
+        const toggleSidebar = () => {
+            onSetShowSidebar(!showSidebar); // Toggle the current state
+            
+        };
         return (
             <div className="flex">
                 <SideBar
@@ -24,6 +25,7 @@ const EditDestinationPage = () => {
                     onSidebarHide={() => {
                         onSetShowSidebar(false);
                     }}
+                    displaySidebar={toggleSidebar}
                 />
             </div>
         );

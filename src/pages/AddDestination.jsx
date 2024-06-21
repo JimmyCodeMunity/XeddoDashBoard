@@ -9,6 +9,10 @@ const AddDestination = () => {
 
     
         const [showSidebar, onSetShowSidebar] = useState(false);
+        const toggleSidebar = () => {
+            onSetShowSidebar(!showSidebar); // Toggle the current state
+            
+        };
         return (
             <div className="flex">
                 <SideBar
@@ -21,6 +25,7 @@ const AddDestination = () => {
                     onSidebarHide={() => {
                         onSetShowSidebar(false);
                     }}
+                    displaySidebar={toggleSidebar}
                 />
             </div>
         );

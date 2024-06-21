@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
 const EditTrip = () => {
+  const {id} = useParams();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -50,7 +51,33 @@ const EditTrip = () => {
       });
   }, []);
 
-  const addTrip = async (e) => {
+  const getTripData = async (e) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `https://travelinkserver.vercel.app/api/v1/admin/tripdata/${id}`
+      );
+      setDeparture(response.data.departure);
+      setDestination(response.data.destination);
+      setArrivalTime(response.data.arrivalTime);
+      setLeavingTime(response.data.leavingTime);
+      setPrice(response.data.price);
+      setTripDate(response.data.tripdate);
+      setSelectedVehicle(response.data.vehicleId);
+      
+      setLoading(false);
+      console.log("collected user", response.data.username);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getTripData();
+  }, []);
+
+  const updateTrip = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -60,7 +87,7 @@ const EditTrip = () => {
       !selectedVehicle ||
       !leavingTime ||
       !arrivalTime ||
-      !price||
+      !price ||
       !tripdate
     ) {
       toast.error("Kindly fill all the inputs");
@@ -69,8 +96,8 @@ const EditTrip = () => {
     }
 
     try {
-      const response = await axios.post(
-        "https://travelinkserver.vercel.app/api/v1/admin/createtrip",
+      const response = await axios.put(
+        `https://travelinkserver.vercel.app/api/v1/admin/updatetrip/${id}`,
         {
           departure,
           destination,
@@ -78,7 +105,7 @@ const EditTrip = () => {
           leavingTime,
           arrivalTime,
           price,
-          tripdate
+          tripdate,
         }
       );
       console.log(response.data);
@@ -86,20 +113,13 @@ const EditTrip = () => {
       toast.success("Trip added successfully");
       setLoading(false);
       // Reset form fields after successful submission
-      setDeparture("");
-      setDestination("");
-      setSelectedVehicle("");
-      setLeavingTime("");
-      setArrivalTime("");
-      setPrice("");
+     
       // Optionally navigate to another page after successful submission
       // navigate('/dashboard');
     } catch (error) {
       console.log("Error adding new trip");
       console.log(error.message);
-      if ((error.message = "Request failed with status code 400")) {
-        toast.error("Vehicle already assigned trip");
-      }
+      
       toast.error("Error adding trip");
       setLoading(false);
     }
@@ -114,7 +134,7 @@ const EditTrip = () => {
         <form
           action=""
           method="POST"
-          onSubmit={addTrip}
+          onSubmit={updateTrip}
           encType="multipart/form-data"
         >
           <div className="relative z-0 md:w-[70%] w-full mb-5 group">
@@ -255,7 +275,7 @@ const EditTrip = () => {
               datepicker
               type="date"
               value={tripdate}
-              onChange={(e)=>setTripDate(e.target.value)}
+              onChange={(e) => setTripDate(e.target.value)}
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Select date"
             />

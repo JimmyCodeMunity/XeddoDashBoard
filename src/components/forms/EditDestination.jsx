@@ -1,17 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from "../Icon";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
 const EditDestination = () => {
+  const { id } = useParams();
   const [location, setLocation] = useState("");
   const [destinations, setDestinations] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const navigation = useNavigate();
 
-  const addDestination = async (e) => {
+  const getDestinationInfo = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/v1/admin/getdestination/${id}`
+      );
+      console.log(response.data);
+      setLocation(response.data.location);
+    } catch (error) {
+      console.log(error);
+      toast.error("Error adding location");
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getDestinationInfo();
+  }, []);
+
+  const updateDestination = async (e) => {
     setLoading(true);
     e.preventDefault();
 
@@ -27,54 +46,55 @@ const EditDestination = () => {
     // formData.append('file', file)
 
     try {
-      const response = await axios.post(
-        "https://travelinkserver.vercel.app/api/v1/admin/createdestination",
+      const response = await axios.put(
+        `https://travelinkserver.vercel.app/api/v1/admin/updatedestination/${id}`,
         {
           location,
         }
       );
-      // console.log(response);
-      console.log("Location added successfully");
-      toast.success("Location added successfully");
+      console.log(response);
+      console.log("Location updated successfully");
+      toast.success("Location updated successfully");
       setLoading(false);
       // Reset form fields after successful submission
       setLocation("");
-      getDestinations();
+      // getDestinations();
+      getDestinationInfo();
 
       // setFile(null);
       // Optionally navigate to another page after successful submission
-      // navigation('/dashboard');
+      navigation('/destinations');
     } catch (error) {
-      console.log("Error adding new location");
+      console.log("Error Updating new location");
       console.log(error);
-      toast.error("Error adding location");
+      toast.error("Error updating location");
       setLoading(false);
     }
   };
 
   //get all destinations
-  const getDestinations = async () => {
-    try {
-      const response = await axios.get(
-        "https://travelinkserver.vercel.app/api/v1/admin/alldestinations"
-      );
-      const data = response.data;
-      if (data.length > 0) {
-        setDestinations(data);
-        console.log(data);
-      } else {
-        console.log("No destinations found");
-        toast.error("No destinations found");
-      }
-    } catch (error) {
-      console.log("Erro fetching destinations");
-      toast.error("Error fetching destinations");
-    }
-  };
+  // const getDestinations = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       "https://travelinkserver.vercel.app/api/v1/admin/alldestinations"
+  //     );
+  //     const data = response.data;
+  //     if (data.length > 0) {
+  //       setDestinations(data);
+  //       console.log(data);
+  //     } else {
+  //       console.log("No destinations found");
+  //       toast.error("No destinations found");
+  //     }
+  //   } catch (error) {
+  //     console.log("Erro fetching destinations");
+  //     toast.error("Error fetching destinations");
+  //   }
+  // };
 
-  useEffect(() => {
-    getDestinations();
-  }, []);
+  // useEffect(() => {
+  //   getDestinations();
+  // }, []);
   return (
     <div>
       <div className="flex-1 flex-col justify-start items-center w-full bg-black sm:py-10 py-6 md:px-16 px-6 md:space-y-12">
@@ -84,7 +104,7 @@ const EditDestination = () => {
         <form
           action=""
           method="POST"
-          onSubmit={addDestination}
+          onSubmit={updateDestination}
           encType="multipart/form-data"
         >
           <div class="relative z-0 md:w-[70%] w-full mb-5 group">
@@ -112,21 +132,21 @@ const EditDestination = () => {
                 type="submit"
                 className="bg-blue-500 h-12 md:w-60 w-full text-white rounded-md"
               >
-                Creating Destination..
+                Updating Destination..
               </button>
             ) : (
               <button
                 type="submit"
                 className="bg-blue-500 h-12 md:w-60 w-full text-white rounded-md"
               >
-                Create Destination
+                Update Destination
               </button>
             )}
           </div>
         </form>
       </div>
 
-      <div class="-m-1.5 overflow-x-auto px-10">
+      {/* <div class="-m-1.5 overflow-x-auto px-10">
         <div class="p-1.5 min-w-full inline-block align-middle">
           <div class="overflow-hidden">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
@@ -166,7 +186,10 @@ const EditDestination = () => {
                         <Link to="" className="bg-red-500 p-1 rounded-md">
                           Delete
                         </Link>
-                        <Link to={`/editdestination/${dest._id}`} className="bg-green-500 p-1 rounded-md">
+                        <Link
+                          to={`/editdestination/${dest._id}`}
+                          className="bg-green-500 p-1 rounded-md"
+                        >
                           Edit
                         </Link>
                       </td>
@@ -177,7 +200,7 @@ const EditDestination = () => {
             </table>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

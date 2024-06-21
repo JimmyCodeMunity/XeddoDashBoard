@@ -1,9 +1,9 @@
 import React from 'react';
-
-import ViewUsers from './tables/ViewUsers';
 import NavBar from './NavBar';
+import EditVehicle from './forms/EditVehicle';
+import AssignDriverVehicle from './forms/AssignDriverVehicle';
 
-const AllUsers = ({ onSidebarHide,displaySidebar }) => {
+const VehicleAssign = ({ onSidebarHide,displaySidebar }) => {
     return (
         <div className="flex w-full">
             <div className="w-full h-screen hidden sm:block sm:w-40 xl:w-60 flex-shrink-0">
@@ -16,7 +16,7 @@ const AllUsers = ({ onSidebarHide,displaySidebar }) => {
                 
                 <div className="w-full p-2 lg:w-80 flex-1 justify-center">
                     <div className="rounded-lg bg-card overflow-hidden">
-                        <ViewUsers />
+                        <AssignDriverVehicle />
                     </div>
                 </div>
             </div>
@@ -24,4 +24,4 @@ const AllUsers = ({ onSidebarHide,displaySidebar }) => {
     );
 }
 
-export default AllUsers;
+export default VehicleAssign;

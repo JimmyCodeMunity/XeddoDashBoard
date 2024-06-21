@@ -9,10 +9,10 @@ const AddUser = () => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
-    const [file, setFile] = useState(null);
+    // const [file, setFile] = useState(null);
     const [address, setAddress] = useState('')
     const [loading,setLoading] = useState(false);
-    const navigation = useNavigate()
+    // const navigation = useNavigate()
 
     const addUser = async (e) => {
         setLoading(true);
@@ -27,7 +27,7 @@ const AddUser = () => {
             
         }
 
-        const formData = new FormData();
+        // const formData = new FormData();
         // formData.append('file', file)
         
 

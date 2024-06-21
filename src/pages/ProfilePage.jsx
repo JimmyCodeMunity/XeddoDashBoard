@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import clsx from 'clsx';
-import Content from '../components/Content';
 import SideBar from '../components/SideBar';
-import ProductAdd from '../components/ProductAdd';
-import UserAdd from '../components/UserAdd';
 import ProfileComponent from '../components/ProfileComponent';
 
 const ProfilePage = () => {
@@ -11,6 +7,10 @@ const ProfilePage = () => {
 
     
         const [showSidebar, onSetShowSidebar] = useState(false);
+        const toggleSidebar = () => {
+            onSetShowSidebar(!showSidebar); // Toggle the current state
+            
+        };
         return (
             <div className="flex">
                 <SideBar
@@ -23,6 +23,7 @@ const ProfilePage = () => {
                     onSidebarHide={() => {
                         onSetShowSidebar(false);
                     }}
+                    displaySidebar={toggleSidebar}
                 />
             </div>
         );

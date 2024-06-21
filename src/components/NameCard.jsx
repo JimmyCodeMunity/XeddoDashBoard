@@ -20,13 +20,14 @@ export const NameCard = ({
   });
 
   const [product, setProduct] = useState(0)
+  const [trip, setTrip] = useState(0)
   const [user, setUser] = useState(0)
   const [vehicles,setVehicles] = useState(0)
 
   const getTotalProducts = async () => {
     try {
       const response = await axios.get('https://travelinkserver.vercel.app/api/v1/admin/alltrips');
-      setProduct(response.data.length);
+      setTrip(response.data.length);
       // console.log("productcount", response.data.length);
 
     } catch (error) {
@@ -68,7 +69,7 @@ export const NameCard = ({
         <div className="rounded-lg bg-card flex justify-between p-3 h-32">
           <div className="">
             <div className="flex items-center">
-              <Image path={`mock_faces_${imgId}`} className="w-10 h-10" />
+              
               <div className="ml-2">
                 <div className="flex items-center">
                   <div className="mr-2 font-bold text-white">Total Vehicles
@@ -126,10 +127,10 @@ export const NameCard = ({
         <div className="rounded-lg bg-card flex justify-between p-3 h-32">
           <div className="">
             <div className="flex items-center">
-              <Image path={`mock_faces_${imgId}`} className="w-10 h-10" />
+             
               <div className="ml-2">
                 <div className="flex items-center">
-                  <div className="mr-2 font-bold text-white">Total Products</div>
+                  <div className="mr-2 font-bold text-white">Total Trips</div>
                   <Icon path="res-react-dash-tick" />
                 </div>
                 <div className="text-sm ">{position}</div>
@@ -173,7 +174,7 @@ export const NameCard = ({
             <animated.div
               className="text-green-500 text-lg font-bold"
             >
-              {transactions.interpolate((i) => `${product}`)}
+              {transactions.interpolate((i) => `${trip}`)}
             </animated.div>
             <div className="text-sm ">Last 6 month</div>
           </div>
@@ -183,7 +184,7 @@ export const NameCard = ({
         <div className="rounded-lg bg-card flex justify-between p-3 h-32">
           <div className="">
             <div className="flex items-center">
-              <Image path={`mock_faces_${imgId}`} className="w-10 h-10" />
+              
               <div className="ml-2">
                 <div className="flex items-center">
                   <div className="mr-2 font-bold text-white">Total Users</div>

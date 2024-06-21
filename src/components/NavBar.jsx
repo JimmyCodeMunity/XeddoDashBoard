@@ -4,7 +4,7 @@ import { IconButton } from './IconButton';
 
 const NavBar = ({ onSidebarHide ,displaySidebar,showSidebar}) => {
     const username = localStorage.getItem('user');
-    console.log("navbar state",!showSidebar)
+    console.log("navbar state",showSidebar)
     
     return (
         <div className="w-full sm:flex p-2 items-end">

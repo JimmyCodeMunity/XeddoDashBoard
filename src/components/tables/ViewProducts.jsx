@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loader from "../Loader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ViewPodructs = () => {
   const [productdata, setProductdata] = useState([]);
@@ -23,6 +24,31 @@ const ViewPodructs = () => {
       console.log(error);
       toast.error("error getting products");
       setLoading(false);
+    }
+  };
+
+  const navigate = useNavigate()
+
+  const deleteVehicle = async (id) => {
+    const result = await Swal.fire({
+      title: "Do you really want to delete?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(
+          `https://travelinkserver.vercel.app/api/v1/admin/deletevehicle/${id}`
+        );
+        toast.success("Vehicle deleted");
+        getProducts();
+        // navigate("/products");
+        
+      } catch (error) {
+        toast.error(error.message);
+      }
     }
   };
 
@@ -87,6 +113,7 @@ const ViewPodructs = () => {
                               <Link to={`/editvehicle/${product._id}`}>Edit</Link>
                             </button>
                             <button
+                            onClick={()=>deleteVehicle(product._id)}
                               type="button"
                               class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg bg-red-500 p-2 border border-transparent text-white disabled:opacity-50 disabled:pointer-events-none"
                             >

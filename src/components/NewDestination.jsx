@@ -3,14 +3,14 @@ import NavBar from './NavBar';
 import AddTrip from './forms/AddTrip';
 import CreateDestination from './forms/CreateDestination';
 
-const NewDestination = ({ onSidebarHide }) => {
+const NewDestination = ({ onSidebarHide,displaySidebar }) => {
     return (
         <div className="flex w-full">
             <div className="w-full h-screen hidden sm:block sm:w-40 xl:w-60 flex-shrink-0">
                 .
             </div>
             <div className=" h-screen flex-grow overflow-x-hidden overflow-auto flex flex-wrap content-start p-2">
-                <NavBar sidestate={onSidebarHide} />
+                <NavBar displaySidebar={displaySidebar} sidestate={onSidebarHide} />
                 
 
                 

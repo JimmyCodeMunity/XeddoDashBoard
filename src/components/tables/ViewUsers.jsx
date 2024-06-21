@@ -29,7 +29,7 @@ const ViewUsers = () => {
   const navigate = useNavigate();
 
   //delete user from the database
-  const deleteProduct = async () => {
+  const deleteUser = async (id) => {
     const result = await Swal.fire({
       title: "Do you really want to delete?",
       icon: "warning",
@@ -40,10 +40,12 @@ const ViewUsers = () => {
     if (result.isConfirmed) {
       try {
         await axios.delete(
-        //   `https://node-backend-test.vercel.app/api/product/deleteproduct/${id}`
+          `https://travelinkserver.vercel.app/api/v1/admin/deleteuser/${id}`
         );
-        toast.error("Product deleted");
+        toast.error("User deleted");
+        getUsers();
         navigate("/users");
+        
       } catch (error) {
         toast.error(error.message);
       }
@@ -123,7 +125,7 @@ const ViewUsers = () => {
                                 Edit
                               </Link>
                               <button
-                              onClick={() => deleteProduct()}
+                              onClick={() => deleteUser(user._id)}
                                 type="button"
                                 class="inline-flex bg-red-500 text-white p-2 items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent disabled:opacity-50 disabled:pointer-events-none"
                               >

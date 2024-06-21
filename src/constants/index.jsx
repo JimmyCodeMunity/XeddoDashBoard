@@ -60,7 +60,7 @@ export const sidebarItems = [
         // { id: '4', title: 'Chat', notifications: 6 },
         // { id: '5', title: 'Team', notifications: false },
         { id: '6', title: 'All Users', notifications: false,link:'/users' },
-        { id: '7', title: 'All Staff', notifications: false,link:'/staffs' },
+        { id: '7', title: 'All Drivers', notifications: false,link:'/drivers' },
         { id: '8', title: 'All Vehicles', notifications: false,link:'/products' },
         { id: '9', title: 'All Trips', notifications: false,link:'/trips' },
     ],

@@ -4,13 +4,13 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const AddTrip = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [phone, setPhone] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [locations, setLocations] = useState([]);
   const [vehicles, setVehicles] = useState([]);
   const [error, setError] = useState(null);
@@ -51,6 +51,8 @@ const AddTrip = () => {
   }, []);
 
   const addTrip = async (e) => {
+    
+    // console.log("date of trip",tripdate)
     e.preventDefault();
     setLoading(true);
 
@@ -69,8 +71,9 @@ const AddTrip = () => {
     }
 
     try {
+      
       const response = await axios.post(
-        "https://travelinkserver.vercel.app/api/v1/admin/createtrip",
+        "http://localhost:5000/api/v1/admin/createtrip",
         {
           departure,
           destination,
@@ -81,8 +84,8 @@ const AddTrip = () => {
           tripdate
         }
       );
-      console.log(response.data);
-      console.log("Trip added successfully");
+      // console.log(response.data);
+      // console.log("Trip added successfully");
       toast.success("Trip added successfully");
       setLoading(false);
       // Reset form fields after successful submission
@@ -92,6 +95,7 @@ const AddTrip = () => {
       setLeavingTime("");
       setArrivalTime("");
       setPrice("");
+      setTripDate("");
       // Optionally navigate to another page after successful submission
       // navigate('/dashboard');
     } catch (error) {

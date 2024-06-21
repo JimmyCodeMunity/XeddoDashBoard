@@ -21,6 +21,8 @@ import EditVehiclePage from './pages/EditVehiclePage';
 import EditTripPage from './pages/EditTripPage';
 import EditDestinationPage from './pages/EditDestinationPage';
 import TripsPage from './pages/TripsPage';
+import EditDriverPage from './pages/EditDriverPage';
+import VehicleAssignPage from './pages/VehicleAssignPage';
 
 function App() {
   return (
@@ -36,7 +38,9 @@ function App() {
           <Route path="/addstaff" element={<AddStaff />} />
           <Route path="/users" element={<Users />} />
           <Route path="/trips" element={<TripsPage />} />
-          <Route path="/staffs" element={<Staff />} />
+          <Route path="/drivers" element={<Staff />} />
+          <Route path='/editdriver/:id' element={<EditDriverPage />}></Route>
+          <Route path='/assignvehicledriver/:id' element={<VehicleAssignPage />}></Route>
           <Route path="/products" element={<Products />} />
           <Route path='/editvehicle/:id' element={<EditVehiclePage />}></Route>
           <Route path="/destinations" element={<AddDestination />} />

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
 import SideBar from '../components/SideBar';
-import UserAdd from '../components/UserAdd';
 
-const AddUser = () => {
+import DriverEdit from '../components/DriverEdit';
+
+const EditDriverPage = () => {
     
 
     
@@ -20,7 +21,7 @@ const AddUser = () => {
                     }}
                     showSidebar={showSidebar}
                 />
-                <UserAdd
+                <DriverEdit
                     onSidebarHide={() => {
                         onSetShowSidebar(false);
                     }}
@@ -31,4 +32,5 @@ const AddUser = () => {
     
 }
 
-export default AddUser;
+export default EditDriverPage;
+

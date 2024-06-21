@@ -10,32 +10,35 @@ const StaffAddForm = () => {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     // const [file, setFile] = useState(null);
-    const [address, setAddress] = useState('')
+    const [service, setService] = useState('')
     const navigation = useNavigate()
+    const [loading,setLoading] = useState(false);
+
+
+    
 
     const addStaff = async (e) => {
         e.preventDefault();
+        setLoading(true)
 
         if (!username || !email || !phone || !password ) {
             e.preventDefault();
             console.log("All fields are required");
             toast.error('Kindly fill all the inputs');
+            setLoading(false);
             return;
         }
 
-        const formData = new FormData();
-        // formData.append('file', file)
-        formData.append('username', username);
-        formData.append('email', email);
-        formData.append('phone', phone);
-        formData.append('password', password);
-        formData.append('address', address);
+        
 
         try {
-            const response = await axios.post('http://localhost:5000/api/v2/staff/createstaff', formData);
-            // console.log(response);
-            console.log("User added successfully");
-            toast.success('User added successfully');
+            const response = await axios.post('https://travelinkserver.vercel.app/api/v1/admin/createdriver', {
+                username,email,phone,password,service
+            });
+            console.log(response);
+            console.log("Driver added successfully");
+            toast.success('Driver added successfully');
+            setLoading(false)
             // Reset form fields after successful submission
             setUsername('');
             setEmail('');
@@ -45,9 +48,10 @@ const StaffAddForm = () => {
             // Optionally navigate to another page after successful submission
             // navigation('/dashboard');
         } catch (error) {
-            console.log("Error adding new staff");
+            console.log("Error adding new driver");
             console.log(error);
-            toast.error('Error adding staff');
+            toast.error('Error adding driver');
+            setLoading(false)
         }
     };
     return (
@@ -70,8 +74,8 @@ const StaffAddForm = () => {
                         <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone</label>
                     </div>
                     <div class="relative z-0 md:w-[70%] w-full mb-5 group">
-                        <input value={address} onChange={(e) => setAddress(e.target.value)} type="text" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Address</label>
+                        <input value={service} onChange={(e) => setService(e.target.value)} type="text" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Service Number</label>
                     </div>
                     <div class="relative z-0 md:w-[70%] w-full mb-5 group">
                         <input value={password} onChange={(e) => setPassword(e.target.value)} type="text" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -79,7 +83,13 @@ const StaffAddForm = () => {
                     </div>
                    
                     <div className="relative w-full justify-center items-center mb-5 group">
-                        <button type="submit" className="bg-blue-500 h-12 md:w-60 w-full text-white rounded-md">Create Driver</button>
+                        {
+                            loading ? (
+                                <p className="text-green-500">Creating Driver....</p>
+                            ):(
+                                <button type="submit" className="bg-blue-500 h-12 md:w-60 w-full text-white rounded-md">Create Driver</button>
+                            )
+                        }
                     </div>
                 </form>
 
