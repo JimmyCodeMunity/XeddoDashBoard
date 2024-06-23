@@ -73,7 +73,7 @@ const AddTrip = () => {
     try {
       
       const response = await axios.post(
-        "http://localhost:5000/api/v1/admin/createtrip",
+        "https://travelinkserver.vercel.app/api/v1/admin/createtrip",
         {
           departure,
           destination,
